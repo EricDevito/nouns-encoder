@@ -1,25 +1,6 @@
 import React, { useState, useCallback, useMemo } from "react";
 import { encodeFunctionData, decodeFunctionData, parseAbiItem } from "viem";
-import { functions } from "../functions.ts";
-
-interface Param {
-  name: string;
-  type: string;
-}
-
-interface FunctionDef {
-  name: string;
-  params: Param[];
-  interface: string;
-}
-
-interface AppState {
-  selectedFunction: FunctionDef;
-  inputValues: Record<string, string>;
-  encodedData: string;
-  error: string | null;
-  isLoading: boolean;
-}
+import { AppState, functions } from "../utils.ts";
 
 const ErrorMessage: React.FC<{ message: string }> = ({ message }) => (
   <div

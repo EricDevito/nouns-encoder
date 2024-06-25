@@ -1,3 +1,22 @@
+export interface Param {
+  name: string;
+  type: string;
+}
+
+export interface FunctionDef {
+  name: string;
+  params: Param[];
+  interface: string;
+}
+
+export interface AppState {
+  selectedFunction: FunctionDef;
+  inputValues: Record<string, string>;
+  encodedData: string;
+  error: string | null;
+  isLoading: boolean;
+}
+
 export const functions: FunctionDef[] = [
   {
     name: "_setVotingDelay",
