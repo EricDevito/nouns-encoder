@@ -14,8 +14,6 @@ const ErrorMessage: React.FC<{ message: string }> = ({ message }) => (
 const Info = () => {
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-4">
-      <h3 className="text-lg font-semibold text-gray-700 mb-3">Info</h3>
-
       <p className="mb-3 text-gray-600">
         As part of the{" "}
         <a
