@@ -15,6 +15,8 @@ export interface AppState {
   encodedData: string;
   error: string | null;
   isLoading: boolean;
+  decodedFunction: string | null;
+  decodedParams: Record<string, string> | null;
 }
 
 export const functions: FunctionDef[] = [

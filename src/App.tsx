@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useMemo } from "react";
 import { encodeFunctionData, decodeFunctionData, parseAbiItem } from "viem";
-import { AppState, functions } from "../utils.ts";
+import { AppState, functions } from "../utils";
 
 const ErrorMessage: React.FC<{ message: string }> = ({ message }) => (
   <div
@@ -18,6 +18,8 @@ const App: React.FC = () => {
     encodedData: "",
     error: null,
     isLoading: false,
+    decodedFunction: null,
+    decodedParams: null,
   });
 
   const [decodeInput, setDecodeInput] = useState("");
@@ -76,7 +78,11 @@ const App: React.FC = () => {
         args: params,
       });
 
-      setState((prev) => ({ ...prev, encodedData: encoded, isLoading: false }));
+      setState((prev) => ({
+        ...prev,
+        encodedData: encoded as `0x${string}`,
+        isLoading: false,
+      }));
     } catch (error) {
       console.error("Encoding error:", error);
       setState((prev) => ({
@@ -95,7 +101,7 @@ const App: React.FC = () => {
       const abi = functions.map((f) => parseAbiItem(f.interface));
       const decoded = decodeFunctionData({
         abi,
-        data: decodeInput,
+        data: decodeInput as `0x${string}`,
       });
 
       const decodedFunction = functions.find(
@@ -105,13 +111,12 @@ const App: React.FC = () => {
         throw new Error("Unknown function");
       }
 
-      const decodedParams = decodedFunction.params.reduce(
-        (acc, param, index) => {
-          acc[param.name] = decoded.args[index].toString();
-          return acc;
-        },
-        {} as Record<string, string>,
-      );
+      const decodedParams = decodedFunction.params.reduce<
+        Record<string, string>
+      >((acc, param, index) => {
+        acc[param.name] = decoded.args[index]?.toString() || "";
+        return acc;
+      }, {});
 
       setState((prev) => ({
         ...prev,
