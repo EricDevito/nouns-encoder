@@ -353,9 +353,9 @@ const App: React.FC = () => {
                 </div>
               )}
             </div>
+            {/* Shared Error Message */}
+            {state.error && <ErrorMessage message={state.error} />}
           </div>
-          {/* Shared Error Message */}
-          {state.error && <ErrorMessage message={state.error} />}
         </div>
       </div>
     </div>
